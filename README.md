@@ -1,10 +1,20 @@
 # Advanced SQL Analytics | Customer & Product Intelligence
 
+[Explore my portfolio](https://sharankumarsrathod12345.github.io/) · [Discuss a project on Upwork](https://www.upwork.com/freelancers/~01db224cb89f18ba29)
+
 **Sales trends · Cohort retention · Customer segmentation · Product performance · SQL Server**
 
 A business-focused SQL analytics case study built on a **Bronze → Silver → Gold Medallion Data Warehouse**. This project transforms the modeled sales data into deeper historical analysis and two reusable reporting views: one for customers and one for products.
 
 > **Project at a glance:** 60,398 transaction records · 27,659 distinct orders · 18,484 customer records · 295 products in the supplied snapshot. All metrics below describe a historical practice dataset, not a live company or client deployment.
+
+## Review this project in three steps
+
+1. Read the [business case and method](docs/business-case-and-method.md) for the stakeholder questions and analytical approach.
+2. Review the findings below alongside the [metric definitions and limitations](docs/metric-definitions-and-limitations.md).
+3. Inspect the original SQL and [supporting diagnostic queries](tests/data_quality_checks.sql) for the implementation.
+
+This demonstrates a documented analytical reporting foundation. Native SQL Server execution and reconciliation of the reporting views remain separate validation steps.
 
 ## Business challenge
 

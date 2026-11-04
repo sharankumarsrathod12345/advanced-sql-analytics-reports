@@ -1,27 +1,26 @@
-# Portfolio Project Entry
+# Portfolio-ready project summary
 
-**Project title:** Advanced SQL Analytics & Customer–Product Intelligence
+## Advanced SQL Analytics & Customer–Product Intelligence
 
-**Category:** SQL Server · Advanced Analytics · Business Intelligence
+**Role:** SQL Analytics Developer | **Stack:** SQL Server, T-SQL, SSMS, Medallion Warehouse, CTEs, window functions, reporting views
 
-**Short card description (website / Upwork):**
-Developed advanced SQL analyses and reusable customer/product reporting views on a Medallion warehouse Gold layer. Explored revenue trends, cumulative sales, product performance, segmentation, category contribution, and customer retention using T-SQL CTEs and window functions.
+**Project card (short):**
+Built advanced SQL analytics and customer/product reporting views on a Medallion warehouse. Analyzed revenue trends, cumulative performance, customer retention, spending segments and category contribution with CTEs and window functions.
 
-**Extended case-study summary:**
-A retail sales warehouse contains customer, product, and transaction data, but managers need more than raw totals. This project uses SQL Server to investigate sales patterns over time, compare product performance against prior periods, segment purchasing behavior, and study annual returning customers and first-purchase monthly cohorts. Two reusable analytical views consolidate customer- and product-level KPIs for downstream BI reporting.
+**Business case:**
+Sales leaders need a consistent way to compare periods, investigate high-value customers, understand repeat purchasing and see which products drive revenue and units. I developed an advanced SQL analysis script and two reusable Gold-layer reporting views to support these questions, using SQL Server and an existing dimensional warehouse.
 
-**Role:** SQL analytics developer (individual portfolio / course capstone).
+**Highlights:**
+- Period comparisons, cumulative values and `LAG`-based product comparisons.
+- Annual returning-customer and monthly first-purchase cohort activity.
+- Customer KPI reporting with spend segments and time-based measures.
+- Product-level performance reporting with purchasing and revenue measures.
+- Source-data diagnostic checks documented separately from the original SQL.
 
-**Deliverables:** Advanced analytics T-SQL script; customer analytics reporting view; product performance reporting view; documentation and data-validation checks.
+**Portfolio link:** https://github.com/sharankumarsrathod12345/advanced-sql-analytics-reports
 
-**Tech stack:** SQL Server, SSMS, T-SQL, CTEs, window functions, `LAG`, `DATETRUNC`, `DENSE_RANK`/ranking concepts, dimensional modeling.
+**Evidence statement:** Individual course-capstone project on a historical practice dataset; not a claim of client deployment or financial impact. Three original SQL scripts are unchanged.
 
-**Business value:** Provides a reusable analytical foundation to investigate revenue concentration, customer activity and product trends. No measured client impact or production deployment is claimed.
+**Suggested Upwork project title:** Advanced SQL Sales Analytics, Customer Segmentation & Reporting Views
 
-**Link:** Add the URL of the new public GitHub repository after it is created.
-
-**Suggested resume bullet:**
-Developed advanced T-SQL analytics and reusable customer/product reporting views on a Medallion warehouse, covering sales trends, cohort activity, revenue concentration, segmentation, and customer/product KPI analysis.
-
-**Suggested GitHub description (under 350 characters):**
-Advanced SQL Server analytics with sales trends, window functions, cohort retention, segmentation, and customer/product reporting views built on a Medallion warehouse Gold layer.
+**Resume bullet:** Developed advanced T-SQL analyses and reusable customer/product reporting views on a Medallion warehouse, examining sales trends, customer cohorts, revenue contribution and product-level performance.

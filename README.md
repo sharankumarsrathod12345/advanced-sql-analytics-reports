@@ -1,78 +1,95 @@
 # Advanced SQL Analytics | Customer & Product Intelligence
 
-**SQL Server • T-SQL • Business Intelligence • Window Functions • Cohort Retention • Customer Segmentation**
+**Sales trends · Cohort retention · Customer segmentation · Product performance · SQL Server**
 
-An end-to-end **analytical reporting project** built on the Gold layer of a SQL Server Medallion data warehouse. The project answers commercial questions about revenue trends, repeat purchasing, customer value, category concentration and product performance.
+A business-focused SQL analytics case study built on a **Bronze → Silver → Gold Medallion Data Warehouse**. This project transforms the modeled sales data into deeper historical analysis and two reusable reporting views: one for customers and one for products.
 
-> **Portfolio project, not a production deployment.** This repository contains the original course-capstone SQL scripts with documented assumptions and quality limitations. No client impact or production performance claims are made.
+> **Project at a glance:** 60,398 transaction records · 27,659 distinct orders · 18,484 customer records · 295 products in the supplied snapshot. All metrics below describe a historical practice dataset, not a live company or client deployment.
 
-## Business context
+## Business challenge
 
-Retail teams need a trustworthy view of revenue performance and customer/product behavior. Transaction tables alone make it difficult to compare periods, understand returning customers, identify high-value segments and prepare reusable BI reporting datasets.
+Retail stakeholders can see transaction totals but also need answers to more complex questions:
 
-**Objective:** Use a modeled sales warehouse to create advanced SQL analyses and reusable customer and product reporting views.
+- **Revenue:** Which periods contributed most to sales, and how do results change over time?
+- **Customer behavior:** Which customers generate higher sales, and how consistently do customers return?
+- **Product mix:** Which categories and products account for sales, volume, and repeat purchasing?
+- **Reporting:** How can these questions be answered consistently from a reusable SQL reporting layer?
 
-## What the project covers
+## Solution and deliverables
 
-| Workstream | Business question | SQL techniques |
+| Deliverable | Business purpose | SQL methods |
 | --- | --- | --- |
-| Trend analysis | How do sales, units and purchasing customers change across years and months? | `DATETRUNC`, `GROUP BY`, distinct counts |
-| Cumulative analysis | How does revenue accumulate across time? | `SUM() OVER`, `AVG() OVER`, ordered frames |
-| Product performance | How does each product compare with its historical average and preceding observed year? | Multi-stage CTEs, `LAG`, window averages, `CASE` |
-| Segmentation | Which customers are VIP/regular/new and which products fall in cost tiers? | Aggregations, CTEs, `CASE` |
-| Revenue mix | Which product categories contribute most to recorded sales? | Joins, percentage of total, window aggregates |
-| Annual retention | How many customers buy in consecutive calendar years? | Distinct customer-year pairs, self-join, date arithmetic |
-| Cohort analysis | How does monthly activity change after a customer's first observed purchase? | First-purchase cohorts, offsets, distinct customer counts |
-| Customer report | Which customers contribute the most sales and how recently did they buy? | Reusable view, multiple CTEs, AOV, recency, segmentation |
-| Product report | Which selling products drive volume and revenue? | Reusable view, distinct orders/customers, performance groups |
+| [Advanced analytics](sql/01_advanced_sql_analytics.sql) | Explore trends, cumulative measures, product comparisons, customer segments, category contribution, annual repeat purchasing and monthly cohorts | CTEs, `DATETRUNC`, window aggregates, `LAG`, `CASE`, date arithmetic |
+| [Customer reporting view](sql/02_customer_analytics_report.sql) | Summarize purchasing behavior, sales, orders, recency, spending groups and average-value metrics at customer level | Multi-stage CTEs, joins, distinct counts, views |
+| [Product reporting view](sql/03_product_performance_report.sql) | Summarize product sales, units, customers, frequency, recency and product performance groups | Joins, aggregation, segmentation, views |
 
-## Repository structure
+**The three SQL files above are my original course capstone submissions and are preserved unchanged.** Supporting documentation and diagnostic checks are kept separate from the analytical scripts.
+
+## Data architecture
+
+```mermaid
+flowchart LR
+    A[CRM and ERP source data] --> B[Bronze: raw ingestion]
+    B --> C[Silver: cleaned data]
+    C --> D[Gold: sales star schema]
+    D --> E[Advanced SQL analysis]
+    D --> F[Customer reporting view]
+    D --> G[Product reporting view]
+    E --> H[Business insight exploration]
+    F --> I[BI reporting foundation]
+    G --> I
+```
+
+**Source model:** `gold.fact_sales` joins to `gold.dim_customers` and `gold.dim_products`. The upstream warehouse is documented in the [SQL Data Warehouse project](https://github.com/sharankumarsrathod12345/sql-data-warehouse-project). For additional initial exploration, see [Medallion Warehouse & EDA](https://github.com/sharankumarsrathod12345/medallion-warehouse-eda-analytics).
+
+## Dataset overview and exploratory findings
+
+| Metric | Value | Interpretation |
+| --- | ---: | --- |
+| Recorded sales amount | 29,356,250 | Currency is not specified in the source snapshot |
+| Distinct orders | 27,659 | Counted by distinct order number, not fact rows |
+| Sales fact records | 60,398 | Sales records can belong to the same order |
+| Units sold | 60,423 | Sum of recorded quantity |
+| Customer dimension records | 18,484 | Includes all customer dimension rows |
+| Product dimension records | 295 | Catalog products represented in the dimension |
+| Products with observed sales | 130 | Not equivalent to total catalog products |
+
+**What the snapshot suggests:** Bikes contribute the vast majority of recorded sales amount (about **96.46%**), while accessories account for the highest unit volume (about **59.77%**). This is an important revenue-versus-volume distinction worth investigating further; the dataset alone cannot establish the business causes.
+
+The historical order dates span **December 29, 2010 through January 28, 2014**. The first and last calendar years are incomplete. In addition, **19 fact rows** lack an order date (sales amount **4,992**), so time-based totals differ from the complete fact-table total. See [Metrics & analysis boundaries](docs/metric-definitions-and-limitations.md).
+
+## Repository layout
 
 ```text
 advanced-sql-analytics-reports/
 ├── README.md
 ├── PORTFOLIO_ENTRY.md
 ├── sql/
-│   ├── 00_preflight_checks.sql
-│   ├── 01_advanced_sql_analytics.sql
-│   ├── 02_customer_analytics_report.sql
-│   └── 03_product_performance_report.sql
+│   ├── 01_advanced_sql_analytics.sql       # Original submission — unchanged
+│   ├── 02_customer_analytics_report.sql    # Original submission — unchanged
+│   └── 03_product_performance_report.sql   # Original submission — unchanged
+├── tests/
+│   └── data_quality_checks.sql             # Supporting diagnostic queries
 └── docs/
     ├── business-case-and-method.md
     └── metric-definitions-and-limitations.md
 ```
 
-## Requirements and run instructions
+## Reproduce the analysis
 
-- Microsoft SQL Server **2022 or later** for `DATETRUNC`, and SQL Server Management Studio (SSMS).
-- An existing SQL Server database with `gold.fact_sales`, `gold.dim_customers` and `gold.dim_products` from the related [Medallion warehouse project](https://github.com/sharankumarsrathod12345/sql-data-warehouse-project).
-- Run from the correct warehouse database context, not `master`.
+**Environment:** SQL Server **2022+** (the scripts use `DATETRUNC`), SSMS, and the companion Gold-layer warehouse. Select the warehouse database before execution.
 
-1. Execute `sql/00_preflight_checks.sql` and examine exceptions.
-2. Execute individual sections in `sql/01_advanced_sql_analytics.sql` for exploratory analysis.
-3. Review definitions and assumptions before deploying the views.
-4. Execute `sql/02_customer_analytics_report.sql` and `sql/03_product_performance_report.sql` **in a development database**. The supplied original scripts drop and recreate existing views named `gold.report_customers` and `gold.report_product`.
-5. Inspect `SELECT * FROM gold.report_customers` and `SELECT * FROM gold.report_product` results in SSMS; validate totals and categories before connecting a BI tool.
+1. Run the optional [source data-quality checks](tests/data_quality_checks.sql) to inspect join integrity, missing dates and baseline totals.
+2. Execute the independent analysis sections in [the advanced analytics script](sql/01_advanced_sql_analytics.sql).
+3. In a **development database**, review the reporting scripts and then execute them to create `gold.report_customers` and `gold.report_product`. The originals contain `DROP VIEW` / `CREATE VIEW` statements; do not run them against important existing objects without reviewing dependencies and permissions.
+4. Query the resulting views and reconcile counts and sales figures against the Gold fact table with consistent date filters.
 
-**Data sources:** The three analytical SQL scripts are included. The original dataset is not redistributed here. Use the companion warehouse/source data where access and redistribution rights permit.
+## Analytical integrity and scope
 
-## Snapshot-level observations
+The supporting [metric dictionary](docs/metric-definitions-and-limitations.md) explains reporting grain, partial periods, missing dates and known considerations in the original SQL. The [business case](docs/business-case-and-method.md) maps the analysis to stakeholder questions.
 
-The supplied local CSV snapshot contains **60,398 sales rows**, **27,659 distinct order numbers**, **18,484 customer dimension records** and **295 product dimension records**. The sales amount field totals **29,356,250 units of unspecified currency**; this is source-recorded sales amount, not verified profit or collected cash. Only **130 products have observed fact sales**.
+**Evidence boundary:** CSV snapshot aggregates have been independently checked; live SQL Server execution, optimization benchmarks, dashboard deployment and real-client impact are not claimed. The SQL files are intentionally preserved as written rather than silently revised for the portfolio.
 
-Recorded order dates span **2010-12-29 to 2014-01-28**. There are **19 undated sales records representing 4,992 sales units**, so date-restricted reports will not reconcile to unrestricted totals unless exclusions are explained. The dataset's first and last calendar years are partial.
+---
 
-See [metric definitions and limitations](docs/metric-definitions-and-limitations.md) for measurement assumptions and validation gaps.
-
-## Demonstrated skills
-
-`SQL Server` · `T-SQL` · `CTEs` · `Window Functions` · `LAG` · `DATETRUNC` · `Cohort Retention` · `Customer Segmentation` · `Aggregations` · `Views` · `Exploratory Data Analysis` · `Data Validation`
-
-## Evidence and status
-
-- **Included:** Source SQL, business-question map, data limitations, and initial preflight checks.
-- **Not claimed:** Full SQL Server execution validation of these uploaded scripts, BI dashboard delivery, query-performance benchmarking, historical profit analysis, or deployed client outcomes.
-- **Recommended before client use:** Confirm live-schema references, reconcile view totals to the fact table, define an as-of date, validate denominators and date coverage, and investigate data-quality exceptions.
-
-**Project author:** Sharan Kumar Rathod  
-**Related work:** [Medallion Warehouse & EDA](https://github.com/sharankumarsrathod12345/medallion-warehouse-eda-analytics)
+**Author:** Sharan Kumar Rathod · **Tools:** SQL Server, SSMS, T-SQL, CTEs, window functions, dimensional modeling, analytical views.

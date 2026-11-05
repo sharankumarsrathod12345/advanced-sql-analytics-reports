@@ -8,12 +8,6 @@ A business-focused SQL analytics case study built on a **Bronze → Silver → G
 
 > **Project at a glance:** 60,398 transaction records · 27,659 distinct orders · 18,484 customer records · 295 products in the supplied snapshot. All metrics below describe a historical practice dataset, not a live company or client deployment.
 
-## Download the dataset
-
-[Download monthly category sales (CSV)](https://raw.githubusercontent.com/sharankumarsrathod12345/advanced-sql-analytics-reports/main/datasets/gold_monthly_category_sales.csv) · [Preview on GitHub](datasets/gold_monthly_category_sales.csv)
-
-This public extract has one row per observed order month and product category, with sales-line count, units sold and recorded sales amount. Sum the three measures across rows to reproduce the full snapshot. The `Undated` rows account for 19 sales lines and 4,992 in recorded sales. The first and last calendar months have partial coverage. Use the companion warehouse to run queries that need individual transactions or customer keys.
-
 ## Review this project in three steps
 
 1. Read the [business case and method](docs/business-case-and-method.md) for the stakeholder questions and analytical approach.

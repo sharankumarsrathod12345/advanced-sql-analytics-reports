@@ -52,6 +52,16 @@ flowchart LR
 
 **Source model:** `gold.fact_sales` joins to `gold.dim_customers` and `gold.dim_products`. The upstream warehouse is documented in the [SQL Data Warehouse project](https://github.com/sharankumarsrathod12345/sql-data-warehouse-project). For additional initial exploration, see [Medallion Warehouse & EDA](https://github.com/sharankumarsrathod12345/medallion-warehouse-eda-analytics).
 
+## Gold datasets included in this repository
+
+| File | What one row represents | How the analysis uses it |
+| --- | --- | --- |
+| [fact_sales.csv](datasets/fact_sales.csv) | One sales record | Sum `sales_amount` and `quantity` for value and volume. Count distinct `order_number` for orders. |
+| [dim_customers.csv](datasets/dim_customers.csv) | One customer | Join on `customer_key` to summarize purchases by customer and explore customer attributes. |
+| [dim_products.csv](datasets/dim_products.csv) | One catalog product | Join on `product_key` to compare products, subcategories and categories. |
+
+Start with the sales file and join each dimension on its key. In this snapshot, every sales record matches exactly one customer and one product.
+
 ## Dataset overview and exploratory findings
 
 | Metric | Value | Interpretation |
@@ -74,11 +84,16 @@ The historical order dates span **December 29, 2010 through January 28, 2014**. 
 advanced-sql-analytics-reports/
 ├── README.md
 ├── PORTFOLIO_ENTRY.md
+├── datasets/
+│   ├── dim_customers.csv
+│   ├── dim_products.csv
+│   └── fact_sales.csv
 ├── sql/
 │   ├── 01_advanced_sql_analytics.sql       
 │   ├── 02_customer_analytics_report.sql    
 │   └── 03_product_performance_report.sql   
 ├── tests/
+│   ├── README.md
 │   └── data_quality_checks.sql            
 └── docs/
     ├── business-case-and-method.md
@@ -87,7 +102,7 @@ advanced-sql-analytics-reports/
 
 ## Reproduce the analysis
 
-**Environment:** SQL Server **2022+** (the scripts use `DATETRUNC`), SSMS, and the companion Gold-layer warehouse. Select the warehouse database before execution.
+**Environment:** SQL Server **2022+** (the scripts use `DATETRUNC`), SSMS, and the Gold-layer warehouse. Select the companion warehouse database, or import the three CSVs into a separate practice database as `gold.fact_sales`, `gold.dim_customers` and `gold.dim_products`. For a CSV import, use compatible numeric join keys, numeric sales measures and typed date columns. Map missing date values to SQL `NULL` and check two-digit years against the warehouse before using dates for age or recency calculations.
 
 1. Run the optional [source data-quality checks](tests/data_quality_checks.sql) to inspect join integrity, missing dates and baseline totals.
 2. Execute the independent analysis sections in [the advanced analytics script](sql/01_advanced_sql_analytics.sql).

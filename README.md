@@ -75,11 +75,11 @@ advanced-sql-analytics-reports/
 ├── README.md
 ├── PORTFOLIO_ENTRY.md
 ├── sql/
-│   ├── 01_advanced_sql_analytics.sql       # Original submission — unchanged
-│   ├── 02_customer_analytics_report.sql    # Original submission — unchanged
-│   └── 03_product_performance_report.sql   # Original submission — unchanged
+│   ├── 01_advanced_sql_analytics.sql       
+│   ├── 02_customer_analytics_report.sql    
+│   └── 03_product_performance_report.sql   
 ├── tests/
-│   └── data_quality_checks.sql             # Supporting diagnostic queries
+│   └── data_quality_checks.sql            
 └── docs/
     ├── business-case-and-method.md
     └── metric-definitions-and-limitations.md

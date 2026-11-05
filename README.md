@@ -98,7 +98,7 @@ advanced-sql-analytics-reports/
 
 The supporting [metric dictionary](docs/metric-definitions-and-limitations.md) explains reporting grain, partial periods, missing dates and known considerations in the original SQL. The [business case](docs/business-case-and-method.md) maps the analysis to stakeholder questions.
 
-**Evidence boundary:** The three supplied warehouse exports confirm the snapshot totals and the Gold columns used by the original reports (`birth_date`, `sub_category`, `product_cost`). See the [export reconciliation](https://github.com/sharankumarsrathod12345/medallion-warehouse-eda-analytics#verification-status). CSV snapshot aggregates have been independently checked; live SQL Server execution, optimization benchmarks, dashboard deployment and real-client impact are not claimed. The SQL files are intentionally preserved as written rather than silently revised for the portfolio.
+**Evidence boundary:** The three supplied warehouse exports confirm the snapshot totals and the Gold columns used by the original reports (`birth_date`, `sub_category`, `product_cost`). See the [export reconciliation](https://github.com/sharankumarsrathod12345/medallion-warehouse-eda-analytics/blob/60dd9b6a18e859ec9c72554c4ea70bb55917ef36/README.md#verification-status). CSV snapshot aggregates have been independently checked; live SQL Server execution, optimization benchmarks, dashboard deployment and real-client impact are not claimed. The SQL files are intentionally preserved as written rather than silently revised for the portfolio.
 
 ---
 
